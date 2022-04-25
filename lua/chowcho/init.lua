@@ -84,9 +84,16 @@ local win_close = function()
   end
 end
 
+local list_wins = function()
+  local t = {}
+  local ids = string.gmatch(vim.fn.string(vim.fn.winlayout()), "%d+")
+  for id in ids do t[#t + 1] = vim.fn.getwininfo(id)[1].winid end
+  return t
+end
+
 chowcho.run = function()
   _wins = {}
-  local wins = vim.api.nvim_list_wins()
+  local wins = list_wins()
   local current_win = vim.api.nvim_get_current_win()
 
   set_highlight()
